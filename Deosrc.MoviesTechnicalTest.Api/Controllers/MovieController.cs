@@ -35,7 +35,7 @@ namespace Deosrc.MoviesTechnicalTest.Api.Controllers
                 VoteCount = entity.VoteCount,
                 VoteAverage = entity.VoteAverage,
                 OriginalLanguage = entity.OriginalLanguage,
-                Genres = entity.Genre.Split(',').Select(x => x.Trim()).ToArray(), // TODO: Entity should already have this split
+                Genres = entity.Genres,
                 PosterUrl = entity.PosterUrl
             };
         }

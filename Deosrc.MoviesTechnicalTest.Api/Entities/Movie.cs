@@ -12,5 +12,7 @@ namespace Deosrc.MoviesTechnicalTest.Api.Entities
         public required string OriginalLanguage { get; set; }
         public required string Genre { get; set; }
         public required string PosterUrl { get; set; }
+
+        public string[] Genres => Genre.Split(',').Select(x => x.Trim()).ToArray();
     }
 }
