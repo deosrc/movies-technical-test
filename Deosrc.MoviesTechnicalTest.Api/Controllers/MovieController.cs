@@ -1,37 +1,43 @@
-using Deosrc.MoviesTechnicalTest.Api.DataAccess;
+using Deosrc.MoviesTechnicalTest.Api.Entities;
 using Deosrc.MoviesTechnicalTest.Api.Models.Requests;
 using Deosrc.MoviesTechnicalTest.Api.Models.Responses;
+using Deosrc.MoviesTechnicalTest.Api.Services.Search;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Deosrc.MoviesTechnicalTest.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class MovieController(MovieDatabaseContext dbContext, ILogger<MovieController> logger) : ControllerBase
+    public class MovieController(IMovieSearchService searchService, ILogger<MovieController> logger) : ControllerBase
     {
-        private readonly MovieDatabaseContext _dbContext = dbContext;
+        private readonly IMovieSearchService _searchService = searchService;
         private readonly ILogger<MovieController> _logger = logger;
 
         [HttpPost(Name = "Search")]
         public async Task<IEnumerable<MovieResponse>> Search(MovieSearchRequest searchRequest)
         {
-            return await _dbContext.Movies
-                .Take(10)
-                .Select(m=> new MovieResponse
-                {
-                    Id = m.Id,
-                    Title = "Movie",
-                    Overview = "Movie",
-                    ReleaseDate = "2024-04-26",
-                    Popularity = 0,
-                    VoteCount = 0,
-                    VoteAverage = 0,
-                    OriginalLanguage = "en",
-                    Genres = Array.Empty<string>(),
-                    PosterUrl = ""
-                })
-                .ToListAsync();
+            var results = await _searchService.SearchAsync(searchRequest.Title);
+
+            return results
+                .Select(ConvertEntityToResponse)
+                .ToList();
+        }
+
+        private static MovieResponse ConvertEntityToResponse(Movie entity)
+        {
+            return new MovieResponse
+            {
+                Id = entity.Id,
+                Title = entity.Title,
+                Overview = entity.Overview,
+                ReleaseDate = entity.ReleaseDate.ToString("yyyy-MM-dd"),
+                Popularity = entity.Popularity,
+                VoteCount = entity.VoteCount,
+                VoteAverage = entity.VoteAverage,
+                OriginalLanguage = entity.OriginalLanguage,
+                Genres = entity.Genre.Split(',').Select(x => x.Trim()).ToArray(), // TODO: Entity should already have this split
+                PosterUrl = entity.PosterUrl
+            };
         }
     }
 }

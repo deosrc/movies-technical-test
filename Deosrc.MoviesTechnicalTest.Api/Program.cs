@@ -1,5 +1,6 @@
 
 using Deosrc.MoviesTechnicalTest.Api.DataAccess;
+using Deosrc.MoviesTechnicalTest.Api.Services.Search;
 using Microsoft.EntityFrameworkCore;
 
 namespace Deosrc.MoviesTechnicalTest.Api
@@ -13,6 +14,8 @@ namespace Deosrc.MoviesTechnicalTest.Api
             // Add services to the container.
             builder.Services.AddDbContext<MovieDatabaseContext>(options =>
               options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddScoped<IMovieSearchService, EFMovieSearchService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
