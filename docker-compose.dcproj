@@ -4,10 +4,10 @@
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
     <DockerPublishLocally>False</DockerPublishLocally>
-    <ProjectGuid>b12a83f6-e5ba-445f-b362-763da1a2e253</ProjectGuid>
+    <ProjectGuid>ffc242cf-33d6-497b-a3e7-f6b94dc8c970</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
-    <DockerServiceName>deosrc.moviestechnicaltest</DockerServiceName>
+    <DockerServiceName>deosrc.moviestechnicaltest.api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">

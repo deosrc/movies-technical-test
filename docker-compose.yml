@@ -1,11 +1,11 @@
 version: '3.4'
 
 services:
-  deosrc.moviestechnicaltest:
-    image: ${DOCKER_REGISTRY-}deosrcmoviestechnicaltest
+  deosrc.moviestechnicaltest.api:
+    image: ${DOCKER_REGISTRY-}deosrcmoviestechnicaltestapi
     build:
       context: .
-      dockerfile: Deosrc.MoviesTechnicalTest/Dockerfile
+      dockerfile: Deosrc.MoviesTechnicalTest.Api/Dockerfile
 
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest

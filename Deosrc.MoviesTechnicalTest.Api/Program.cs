@@ -1,5 +1,5 @@
 
-namespace Deosrc.MoviesTechnicalTest
+namespace Deosrc.MoviesTechnicalTest.Api
 {
     public class Program
     {

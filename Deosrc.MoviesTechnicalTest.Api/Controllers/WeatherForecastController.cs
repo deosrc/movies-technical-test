@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Deosrc.MoviesTechnicalTest.Controllers
+namespace Deosrc.MoviesTechnicalTest.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]

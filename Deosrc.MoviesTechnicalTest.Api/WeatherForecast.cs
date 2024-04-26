@@ -1,4 +1,4 @@
-namespace Deosrc.MoviesTechnicalTest
+namespace Deosrc.MoviesTechnicalTest.Api
 {
     public class WeatherForecast
     {
