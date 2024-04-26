@@ -16,7 +16,7 @@ namespace Deosrc.MoviesTechnicalTest.Api.Controllers
         [HttpPost(Name = "Search")]
         public async Task<IEnumerable<MovieResponse>> Search(MovieSearchRequest searchRequest)
         {
-            var results = await _searchService.SearchAsync(searchRequest.Title);
+            var results = await _searchService.SearchAsync(searchRequest.Title, searchRequest.Paging);
 
             return results
                 .Select(ConvertEntityToResponse)

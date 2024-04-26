@@ -9,15 +9,18 @@ namespace Deosrc.MoviesTechnicalTest.Api.Services.Search
         private readonly MovieDatabaseContext _dbContext = dbContext;
         private readonly ILogger<EFMovieSearchService> _logger = logger;
 
-        public async Task<IEnumerable<Movie>> SearchAsync(string title)
+        public async Task<IEnumerable<Movie>> SearchAsync(string title, PagingOptions pagingOptions)
         {
             _logger.LogInformation("Searching for movie with title '{title}'...", title);
 
             var results = await _dbContext.Movies
                 .Where(x => x.Title.ToLower().Contains(title.ToLower()))
+                .OrderByDescending(x => x.Popularity)
+                .Skip((pagingOptions.Page - 1) * pagingOptions.ItemsPerPage)
+                .Take(pagingOptions.ItemsPerPage)
                 .ToListAsync();
 
-            _logger.LogInformation("Found {count} movies for title search '{title}'.", results.Count, title);
+            _logger.LogInformation("Returning {count} movies for title search '{title}'.", results.Count, title);
 
             return results;
         }
