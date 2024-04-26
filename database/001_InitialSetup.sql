@@ -16,11 +16,11 @@ BEGIN
         ,Title              NVARCHAR(850) NOT NULL
         ,ReleaseDate        DATE NOT NULL
         ,Overview           TEXT NOT NULL
-        ,Popularity         DECIMAL NOT NULL
+        ,Popularity         DECIMAL(18,3) NOT NULL
         ,VoteCount          INT NOT NULL
-        ,VoteAverage        DECIMAL NOT NULL
+        ,VoteAverage        DECIMAL(18,3) NOT NULL
         ,OriginalLanguage   CHAR(2) NOT NULL
-        ,Genre              NVARCHAR(50) NOT NULL
+        ,Genre              NVARCHAR(4000) NOT NULL
         ,PosterUrl          NVARCHAR(4000) NOT NULL
 
         INDEX [idx_title] (Title)
