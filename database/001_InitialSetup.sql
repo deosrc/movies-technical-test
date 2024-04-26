@@ -3,6 +3,7 @@ BEGIN
     PRINT 'Creating database...';
     CREATE DATABASE Movies;
 END
+GO
 
 USE [Movies];
 GO

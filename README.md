@@ -116,3 +116,8 @@ These are design decisions which I made which I would have clarified:
 Below is a list of question I would ask to clarify the requirements of the task:
 
 - Should all of the fields of the dataset be included in the results?
+
+## Known Issues
+
+- The search mechanism used is rather primitive as it does not handle scenarios such as special characters, mis-types and partial matches. This could be expanded in future to use a different mechanism such as full-text search.
+- Genres are currently stored as a comma separated list. This would be better as a separate table.
