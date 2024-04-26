@@ -14,7 +14,7 @@ namespace Deosrc.MoviesTechnicalTest.Api.Controllers
         private readonly ILogger<MovieController> _logger = logger;
 
         [HttpPost(Name = "Search")]
-        public async Task<PagedResult<MovieResponse>> Search(MovieSearchRequest searchRequest)
+        public async Task<PagedResult<MovieResponse>> SearchAsync(MovieSearchRequest searchRequest)
         {
             var results = await _searchService.SearchAsync(searchRequest.Title, searchRequest.Paging);
 
