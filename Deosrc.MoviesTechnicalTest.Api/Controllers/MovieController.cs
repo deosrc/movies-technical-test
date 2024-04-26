@@ -14,13 +14,15 @@ namespace Deosrc.MoviesTechnicalTest.Api.Controllers
         private readonly ILogger<MovieController> _logger = logger;
 
         [HttpPost(Name = "Search")]
-        public async Task<IEnumerable<MovieResponse>> Search(MovieSearchRequest searchRequest)
+        public async Task<PagedResult<MovieResponse>> Search(MovieSearchRequest searchRequest)
         {
-            var results = await _searchService.SearchAsync(searchRequest.Title);
+            var results = await _searchService.SearchAsync(searchRequest.Title, searchRequest.Paging);
 
-            return results
-                .Select(ConvertEntityToResponse)
-                .ToList();
+            return new()
+            {
+                Results = results.Results.Select(ConvertEntityToResponse).ToList(),
+                Page = results.Page
+            };
         }
 
         private static MovieResponse ConvertEntityToResponse(Movie entity)
