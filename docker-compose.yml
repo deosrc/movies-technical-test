@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  deosrc.moviestechnicaltest.api:
+    image: ${DOCKER_REGISTRY-}deosrcmoviestechnicaltestapi
+    build:
+      context: .
+      dockerfile: Deosrc.MoviesTechnicalTest.Api/Dockerfile
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Developer1!
+    ports:
+      - 1401:1433
