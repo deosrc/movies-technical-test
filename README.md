@@ -122,3 +122,4 @@ Below is a list of question I would ask to clarify the requirements of the task:
 - The search mechanism used is rather primitive as it does not handle scenarios such as special characters, mis-types and partial matches. This could be expanded in future to use a different mechanism such as full-text search.
 - Genres are currently stored as a comma separated list. This would be better as a separate table.
 - Database operations should ideally use `ToListAsync`, but this causes issues for unit testing. A solution should be found to allow ToListAsync to be used in the application whilst also allowing for unit testing.
+- API documentation produced by swagger is basic and should be expanded with descriptions and examples.

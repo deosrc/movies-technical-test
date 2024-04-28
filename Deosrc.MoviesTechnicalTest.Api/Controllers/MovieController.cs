@@ -14,6 +14,7 @@ namespace Deosrc.MoviesTechnicalTest.Api.Controllers
         private readonly ILogger<MovieController> _logger = logger;
 
         [HttpPost(Name = "Search")]
+        [Produces<PagedResult<MovieResponse>>]
         public async Task<IActionResult> SearchAsync(MovieSearchRequest searchRequest)
         {
             if (!ModelState.IsValid)
