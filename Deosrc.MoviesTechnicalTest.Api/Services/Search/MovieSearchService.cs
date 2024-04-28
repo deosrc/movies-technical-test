@@ -9,16 +9,16 @@ namespace Deosrc.MoviesTechnicalTest.Api.Services.Search
         private readonly IMovieReadOnlyRepository _movieRepository = movieRepository;
         private readonly ILogger<MovieSearchService> _logger = logger;
 
-        public async Task<PagedResult<Movie>> SearchAsync(string title, PagingOptions pagingOptions)
+        public Task<PagedResult<Movie>> SearchAsync(string titleSearch, PagingOptions pagingOptions)
         {
-            _logger.LogInformation("Searching for movie with title '{title}'...", title);
+            _logger.LogInformation("Searching for movie with title '{title}'...", titleSearch);
 
-            var results = await _movieRepository.Movies
-                .Where(x => x.Title.ToLower().Contains(title.ToLower()))
+            var results = _movieRepository.Movies
+                .Where(x => x.Title.ToLower().Contains(titleSearch.ToLower()))
                 .OrderByDescending(x => x.Popularity)
                 .Skip((pagingOptions.Page - 1) * pagingOptions.ItemsPerPage)
                 .Take(pagingOptions.ItemsPerPage + 1) // Retrieve one more than request to see if there are more results
-                .ToListAsync();
+                .ToList();
 
             // Check if there are more results. If there are, reduce the list to the requested amount.
             var hasMorePages = results.Count > pagingOptions.ItemsPerPage;
@@ -27,13 +27,14 @@ namespace Deosrc.MoviesTechnicalTest.Api.Services.Search
                 results = results.Take(pagingOptions.ItemsPerPage).ToList();
             }
 
-            _logger.LogInformation("Returning {count} movies for title search '{title}'.", results.Count, title);
+            _logger.LogInformation("Returning {count} movies for title search '{title}'.", results.Count, titleSearch);
 
-            return new()
+            // TODO: This method should be async but using ToListAsync causes issues for unit tests. See README.
+            return Task.FromResult<PagedResult<Movie>>(new()
             {
                 Results = results,
                 Page = new(pagingOptions, hasMorePages)
-            };
+            });
         }
     }
 }

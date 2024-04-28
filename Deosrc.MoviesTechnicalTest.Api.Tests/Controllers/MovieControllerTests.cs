@@ -11,7 +11,7 @@ namespace Deosrc.MoviesTechnicalTest.Api.Tests.Controllers
 {
     public class MovieControllerTests
     {
-        private readonly Fixture _fixture = new();
+        private readonly CustomFixture _fixture = new();
         private readonly Mock<IMovieSearchService> _mockMovieSearchService = new();
         private readonly MovieController _sut;
 
