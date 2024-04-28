@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\movies-technical-test\Deosrc.MoviesTechnicalTest.Api\Deosrc.MoviesTechnicalTest.Api.csproj" />
+    <ProjectReference Include="..\Deosrc.MoviesTechnicalTest.Api\Deosrc.MoviesTechnicalTest.Api.csproj" />
   </ItemGroup>
 
   <ItemGroup>
