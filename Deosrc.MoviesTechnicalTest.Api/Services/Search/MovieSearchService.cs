@@ -4,17 +4,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Deosrc.MoviesTechnicalTest.Api.Services.Search
 {
-    public class EFMovieSearchService(MovieDatabaseContext dbContext, ILogger<EFMovieSearchService> logger) : IMovieSearchService
+    public class MovieSearchService(IMovieReadOnlyRepository movieRepository, ILogger<MovieSearchService> logger) : IMovieSearchService
     {
-        private readonly MovieDatabaseContext _dbContext = dbContext;
-        private readonly ILogger<EFMovieSearchService> _logger = logger;
+        private readonly IMovieReadOnlyRepository _movieRepository = movieRepository;
+        private readonly ILogger<MovieSearchService> _logger = logger;
 
         public async Task<PagedResult<Movie>> SearchAsync(string title, PagingOptions pagingOptions)
         {
             _logger.LogInformation("Searching for movie with title '{title}'...", title);
 
-            var results = await _dbContext.Movies
-                .AsNoTracking()
+            var results = await _movieRepository.Movies
                 .Where(x => x.Title.ToLower().Contains(title.ToLower()))
                 .OrderByDescending(x => x.Popularity)
                 .Skip((pagingOptions.Page - 1) * pagingOptions.ItemsPerPage)
