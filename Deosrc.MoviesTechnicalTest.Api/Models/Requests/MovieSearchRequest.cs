@@ -5,6 +5,7 @@ namespace Deosrc.MoviesTechnicalTest.Api.Models.Requests
 {
     public record MovieSearchRequest
     {
+        [Required]
         [MinLength(1)]
         public required string Title { get; set; }
 
