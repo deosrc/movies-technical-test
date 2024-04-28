@@ -33,9 +33,9 @@ namespace Deosrc.MoviesTechnicalTest.Api.Controllers
                 Title = entity.Title,
                 Overview = entity.Overview,
                 ReleaseDate = entity.ReleaseDate.ToString("yyyy-MM-dd"),
-                Popularity = entity.Popularity,
+                Popularity = (double)entity.Popularity,
                 VoteCount = entity.VoteCount,
-                VoteAverage = entity.VoteAverage,
+                VoteAverage = (double)entity.VoteAverage,
                 OriginalLanguage = entity.OriginalLanguage,
                 Genres = entity.Genres,
                 PosterUrl = entity.PosterUrl
