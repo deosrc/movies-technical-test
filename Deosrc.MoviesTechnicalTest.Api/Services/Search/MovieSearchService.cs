@@ -11,6 +11,9 @@ namespace Deosrc.MoviesTechnicalTest.Api.Services.Search
 
         public Task<PagedResult<Movie>> SearchAsync(string titleSearch, PagingOptions pagingOptions)
         {
+            ArgumentNullException.ThrowIfNull(titleSearch);
+            ArgumentNullException.ThrowIfNull(pagingOptions);
+
             _logger.LogInformation("Searching for movie with title '{title}'...", titleSearch);
 
             var results = _movieRepository.Movies
