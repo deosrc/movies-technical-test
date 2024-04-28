@@ -19,17 +19,22 @@ namespace Deosrc.MoviesTechnicalTest.Api
             builder.Services.AddScoped<IMovieSearchService, MovieSearchService>();
 
             builder.Services.AddControllers();
+            builder.Services.AddProblemDetails();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
 
+            app.UseExceptionHandler();
+            app.UseStatusCodePages();
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.UseDeveloperExceptionPage();
             }
 
             app.UseHttpsRedirection();
