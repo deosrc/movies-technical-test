@@ -13,7 +13,7 @@ services:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=Developer1!
     volumes:
-      - ./database/db_data:/data:/var/opt/mssql/data
+      - ./database/db_data:/var/opt/mssql/data
       - ./database/db_log:/var/opt/mssql/log
       - ./database/db_secrets:/var/opt/mssql/secrets
     ports:
