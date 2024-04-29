@@ -68,6 +68,17 @@ namespace Deosrc.MoviesTechnicalTest.Api.Tests.Services.Search
         }
 
         [Fact]
+        public async Task SearchAsync_GenreFiltering_MatchesResults()
+        {
+            var results = await _sut.SearchAsync(MatchAllSearch, "Genre A", AllResults);
+
+            Assert.Collection(
+                results.Results,
+                x => Assert.Equal(_searchMatch, x)
+                );
+        }
+
+        [Fact]
         public async Task SearchAsync_NoMatches()
         {
             var results = await _sut.SearchAsync("a b c", null, AllResults);
