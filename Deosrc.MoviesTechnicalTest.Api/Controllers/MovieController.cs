@@ -23,7 +23,7 @@ namespace Deosrc.MoviesTechnicalTest.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var results = await _searchService.SearchAsync(searchRequest.Title, searchRequest.Paging);
+            var results = await _searchService.SearchAsync(searchRequest.Title, searchRequest.Genre, searchRequest.Paging);
 
             return Ok(new PagedResult<MovieResponse>()
                 {

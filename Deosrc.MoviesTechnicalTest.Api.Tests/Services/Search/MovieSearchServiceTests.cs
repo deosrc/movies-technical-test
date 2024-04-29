@@ -59,7 +59,7 @@ namespace Deosrc.MoviesTechnicalTest.Api.Tests.Services.Search
         [InlineData("Partial match", "etab")]
         public async Task SearchAsync_BasicSearch_MatchesResults(string _, string search)
         {
-            var results = await _sut.SearchAsync(search, AllResults);
+            var results = await _sut.SearchAsync(search, null, AllResults);
 
             Assert.Collection(
                 results.Results,
@@ -70,7 +70,7 @@ namespace Deosrc.MoviesTechnicalTest.Api.Tests.Services.Search
         [Fact]
         public async Task SearchAsync_NoMatches()
         {
-            var results = await _sut.SearchAsync("a b c", AllResults);
+            var results = await _sut.SearchAsync("a b c", null, AllResults);
             Assert.Empty(results.Results);
         }
 
@@ -86,6 +86,7 @@ namespace Deosrc.MoviesTechnicalTest.Api.Tests.Services.Search
 
             var results = await _sut.SearchAsync(
                 MatchAllSearch,
+                null,
                 new PagingOptions()
                 {
                     ItemsPerPage = pageSize,
@@ -117,6 +118,7 @@ namespace Deosrc.MoviesTechnicalTest.Api.Tests.Services.Search
 
             var results = await _sut.SearchAsync(
                 MatchAllSearch,
+                null,
                 new PagingOptions()
                 {
                     ItemsPerPage = pageSize,
@@ -149,6 +151,7 @@ namespace Deosrc.MoviesTechnicalTest.Api.Tests.Services.Search
 
             var results = await _sut.SearchAsync(
                 MatchAllSearch,
+                null,
                 new PagingOptions()
                 {
                     ItemsPerPage = 10,

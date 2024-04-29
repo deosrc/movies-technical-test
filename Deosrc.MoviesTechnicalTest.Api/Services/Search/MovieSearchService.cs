@@ -9,16 +9,24 @@ namespace Deosrc.MoviesTechnicalTest.Api.Services.Search
         private readonly IMovieReadOnlyRepository _movieRepository = movieRepository;
         private readonly ILogger<MovieSearchService> _logger = logger;
 
-        public Task<PagedResult<Movie>> SearchAsync(string titleSearch, PagingOptions pagingOptions)
+        public Task<PagedResult<Movie>> SearchAsync(string titleSearch, string? genre, PagingOptions pagingOptions)
         {
             ArgumentNullException.ThrowIfNull(titleSearch);
             ArgumentNullException.ThrowIfNull(pagingOptions);
 
             _logger.LogInformation("Searching for movie with title '{title}'...", titleSearch);
 
-            var results = _movieRepository.Movies
-                .Where(x => x.Title.ToLower().Contains(titleSearch.ToLower()))
-                .OrderByDescending(x => x.Popularity)
+            var movies = _movieRepository.Movies;
+
+            movies = movies.Where(x => x.Title.ToLower().Contains(titleSearch.ToLower()));
+
+            if (!string.IsNullOrWhiteSpace(genre))
+            {
+                _logger.LogInformation("Adding genre filter '{genre}'...", genre);
+                movies = movies.Where(x => x.Genres.Any(g => g.Name.ToLower().Equals(genre.ToLower())));
+            }
+
+            var results = movies.OrderByDescending(x => x.Popularity)
                 .Skip((pagingOptions.Page - 1) * pagingOptions.ItemsPerPage)
                 .Take(pagingOptions.ItemsPerPage + 1) // Retrieve one more than request to see if there are more results
                 .ToList();
