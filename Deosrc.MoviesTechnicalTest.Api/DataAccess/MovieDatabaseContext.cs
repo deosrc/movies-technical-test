@@ -12,6 +12,9 @@ namespace Deosrc.MoviesTechnicalTest.Api.DataAccess
             .Include(m => m.Genres)
             .AsNoTracking();
 
+        IQueryable<Genre> IMovieReadOnlyRepository.Genres => Genres
+            .AsNoTracking();
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

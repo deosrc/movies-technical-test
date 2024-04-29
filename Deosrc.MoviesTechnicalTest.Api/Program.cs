@@ -1,5 +1,6 @@
 
 using Deosrc.MoviesTechnicalTest.Api.DataAccess;
+using Deosrc.MoviesTechnicalTest.Api.Services.Lookups;
 using Deosrc.MoviesTechnicalTest.Api.Services.Search;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,7 @@ namespace Deosrc.MoviesTechnicalTest.Api
               options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddScoped<IMovieReadOnlyRepository>(x => x.GetRequiredService<MovieDatabaseContext>());
+            builder.Services.AddScoped<ILookupService, LookupService>();
             builder.Services.AddScoped<IMovieSearchService, MovieSearchService>();
 
             builder.Services.AddControllers();
