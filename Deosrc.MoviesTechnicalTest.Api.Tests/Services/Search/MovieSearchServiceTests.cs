@@ -33,7 +33,14 @@ namespace Deosrc.MoviesTechnicalTest.Api.Tests.Services.Search
 
         public MovieSearchServiceTests()
         {
-            _searchMatch = _fixture.Build<Movie>().With(x => x.Title, "Vegetables").Create();
+            _searchMatch = _fixture.Build<Movie>()
+                .With(x => x.Title, "Vegetables")
+                .With(x => x.Genres, [
+                    new Genre { Id = Guid.NewGuid(), Name = "Genre A" },
+                    new Genre { Id = Guid.NewGuid(), Name = "Genre B" },
+                    new Genre { Id = Guid.NewGuid(), Name = "Genre C" },
+                ])
+                .Create();
 
             _mockRepository
                 .SetupGet(x => x.Movies)
@@ -52,7 +59,18 @@ namespace Deosrc.MoviesTechnicalTest.Api.Tests.Services.Search
         [InlineData("Partial match", "etab")]
         public async Task SearchAsync_BasicSearch_MatchesResults(string _, string search)
         {
-            var results = await _sut.SearchAsync(search, AllResults);
+            var results = await _sut.SearchAsync(search, null, AllResults);
+
+            Assert.Collection(
+                results.Results,
+                x => Assert.Equal(_searchMatch, x)
+                );
+        }
+
+        [Fact]
+        public async Task SearchAsync_GenreFiltering_MatchesResults()
+        {
+            var results = await _sut.SearchAsync(MatchAllSearch, "Genre A", AllResults);
 
             Assert.Collection(
                 results.Results,
@@ -63,7 +81,7 @@ namespace Deosrc.MoviesTechnicalTest.Api.Tests.Services.Search
         [Fact]
         public async Task SearchAsync_NoMatches()
         {
-            var results = await _sut.SearchAsync("a b c", AllResults);
+            var results = await _sut.SearchAsync("a b c", null, AllResults);
             Assert.Empty(results.Results);
         }
 
@@ -79,6 +97,7 @@ namespace Deosrc.MoviesTechnicalTest.Api.Tests.Services.Search
 
             var results = await _sut.SearchAsync(
                 MatchAllSearch,
+                null,
                 new PagingOptions()
                 {
                     ItemsPerPage = pageSize,
@@ -110,6 +129,7 @@ namespace Deosrc.MoviesTechnicalTest.Api.Tests.Services.Search
 
             var results = await _sut.SearchAsync(
                 MatchAllSearch,
+                null,
                 new PagingOptions()
                 {
                     ItemsPerPage = pageSize,
@@ -142,6 +162,7 @@ namespace Deosrc.MoviesTechnicalTest.Api.Tests.Services.Search
 
             var results = await _sut.SearchAsync(
                 MatchAllSearch,
+                null,
                 new PagingOptions()
                 {
                     ItemsPerPage = 10,

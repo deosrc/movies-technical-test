@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Deosrc.MoviesTechnicalTest.Api.Entities
 {
     public record Movie
@@ -10,9 +12,8 @@ namespace Deosrc.MoviesTechnicalTest.Api.Entities
         public required int VoteCount { get; set; }
         public required decimal VoteAverage { get; set; }
         public required string OriginalLanguage { get; set; }
-        public required string Genre { get; set; }
         public required string PosterUrl { get; set; }
 
-        public string[] Genres => Genre.Split(',').Select(x => x.Trim()).ToArray();
+        public ICollection<Genre> Genres { get; set; } = [];
     }
 }

@@ -21,7 +21,7 @@ namespace Deosrc.MoviesTechnicalTest.Api.Tests.Controllers
             _sut = new(_mockMovieSearchService.Object, Mock.Of<ILogger<MovieController>>());
 
             _mockMovieSearchService
-                .Setup(x => x.SearchAsync(It.IsAny<string>(), It.IsAny<PagingOptions>()))
+                .Setup(x => x.SearchAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<PagingOptions>()))
                 .ReturnsAsync(new PagedResult<Movie>()
                 {
                     Results = new List<Movie>()
@@ -36,7 +36,10 @@ namespace Deosrc.MoviesTechnicalTest.Api.Tests.Controllers
                             VoteCount = 456,
                             VoteAverage = 7.89M,
                             OriginalLanguage = "ghi",
-                            Genre = "jk,lm",
+                            Genres = [
+                                new Genre { Id = Guid.NewGuid(), Name = "jk" },
+                                new Genre { Id = Guid.NewGuid(), Name = "lm" }
+                            ],
                             PosterUrl = "opq",
                         }
                     },
@@ -57,8 +60,8 @@ namespace Deosrc.MoviesTechnicalTest.Api.Tests.Controllers
             var result = await _sut.SearchAsync(request);
 
             Assert.Multiple(
-                () => _mockMovieSearchService.Verify(x => x.SearchAsync(It.IsAny<string>(), It.IsAny<PagingOptions>()), Times.Once()),
-                () => _mockMovieSearchService.Verify(x => x.SearchAsync(request.Title, request.Paging), Times.Once())
+                () => _mockMovieSearchService.Verify(x => x.SearchAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<PagingOptions>()), Times.Once()),
+                () => _mockMovieSearchService.Verify(x => x.SearchAsync(request.Title, request.Genre, request.Paging), Times.Once())
                 );
         }
 

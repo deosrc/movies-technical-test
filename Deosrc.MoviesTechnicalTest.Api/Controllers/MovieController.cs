@@ -23,7 +23,7 @@ namespace Deosrc.MoviesTechnicalTest.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var results = await _searchService.SearchAsync(searchRequest.Title, searchRequest.Paging);
+            var results = await _searchService.SearchAsync(searchRequest.Title, searchRequest.Genre, searchRequest.Paging);
 
             return Ok(new PagedResult<MovieResponse>()
                 {
@@ -44,7 +44,7 @@ namespace Deosrc.MoviesTechnicalTest.Api.Controllers
                 VoteCount = entity.VoteCount,
                 VoteAverage = (double)entity.VoteAverage,
                 OriginalLanguage = entity.OriginalLanguage,
-                Genres = entity.Genres,
+                Genres = entity.Genres.Select(x => x.Name).ToArray(),
                 PosterUrl = entity.PosterUrl
             };
         }
