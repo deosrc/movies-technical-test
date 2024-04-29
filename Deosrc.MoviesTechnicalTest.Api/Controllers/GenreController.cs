@@ -17,6 +17,7 @@ namespace Deosrc.MoviesTechnicalTest.Api.Controllers
         {
             var results = (await _lookupService.GetGenresAsync())
                 .Select(ConvertEntityToResponse)
+                .OrderBy(x => x)
                 .ToList();
             return Ok(results);
         }
