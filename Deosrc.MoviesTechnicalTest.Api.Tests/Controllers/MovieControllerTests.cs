@@ -4,6 +4,7 @@ using Deosrc.MoviesTechnicalTest.Api.Entities;
 using Deosrc.MoviesTechnicalTest.Api.Models.Requests;
 using Deosrc.MoviesTechnicalTest.Api.Models.Responses;
 using Deosrc.MoviesTechnicalTest.Api.Services.Search;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 
@@ -76,6 +77,9 @@ namespace Deosrc.MoviesTechnicalTest.Api.Tests.Controllers
 
             var result = await _sut.SearchAsync(request);
 
+            Assert.IsType<OkObjectResult>(result);
+            var objectResult = (OkObjectResult)result;
+
             var expected = new PagedResult<MovieResponse>()
             {
                 Results =
@@ -101,7 +105,7 @@ namespace Deosrc.MoviesTechnicalTest.Api.Tests.Controllers
                     HasMorePages = true
                 }
             };
-            Assert.Equivalent(expected, result);
+            Assert.Equivalent(expected, objectResult.Value);
         }
     }
 }
