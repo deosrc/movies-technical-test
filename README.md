@@ -4,6 +4,17 @@
 
 This repository contains the output for a technical test portion of a job application. It is not intended as production code.
 
+## Getting Started
+
+The solution is configured to use docker and Visual Studio. Other development environments are not supported.
+
+1. Clone the repository.
+1. Open the solution in Visual Studio.
+1. Ensure `docker-compose` is selected as the startup project, and start debugging. This will start the necessary containers.
+1. Follow the steps in the [Database](#database) section to setup the database.
+
+The Swagger UI can then be used to test the API.
+
 ## Database
 
 ### Connecting to the database
@@ -31,6 +42,8 @@ These are design decisions which I made which I would have clarified:
 - Various assumptions on text length for the data.
   - `NVARCHAR(850)` was chosen for title as it is the largest key length for an index.
 - `Original_Language` is assumed to be an [ISO 639](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes) set 1 language code. The source of the data (themoviedb.com), does not seem to have documentation on this.
+- Genre filtering is by each of the value in the comma separated list (e.g. Filtering by "Action" would match against "Action, Adventure").
+- For the first version, it is only possible to filter by a single genre at a time.
 
 ## Requirements Clarification
 
