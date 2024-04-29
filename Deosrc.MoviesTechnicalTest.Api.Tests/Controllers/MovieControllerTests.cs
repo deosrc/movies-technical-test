@@ -36,7 +36,10 @@ namespace Deosrc.MoviesTechnicalTest.Api.Tests.Controllers
                             VoteCount = 456,
                             VoteAverage = 7.89M,
                             OriginalLanguage = "ghi",
-                            Genre = "jk,lm",
+                            Genres = [
+                                new Genre { Id = Guid.NewGuid(), Name = "jk" },
+                                new Genre { Id = Guid.NewGuid(), Name = "lm" }
+                            ],
                             PosterUrl = "opq",
                         }
                     },

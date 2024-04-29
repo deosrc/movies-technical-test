@@ -33,7 +33,14 @@ namespace Deosrc.MoviesTechnicalTest.Api.Tests.Services.Search
 
         public MovieSearchServiceTests()
         {
-            _searchMatch = _fixture.Build<Movie>().With(x => x.Title, "Vegetables").Create();
+            _searchMatch = _fixture.Build<Movie>()
+                .With(x => x.Title, "Vegetables")
+                .With(x => x.Genres, [
+                    new Genre { Id = Guid.NewGuid(), Name = "Genre A" },
+                    new Genre { Id = Guid.NewGuid(), Name = "Genre B" },
+                    new Genre { Id = Guid.NewGuid(), Name = "Genre C" },
+                ])
+                .Create();
 
             _mockRepository
                 .SetupGet(x => x.Movies)
