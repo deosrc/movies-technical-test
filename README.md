@@ -42,7 +42,7 @@ These are design decisions which I made which I would have clarified:
 - Various assumptions on text length for the data.
   - `NVARCHAR(850)` was chosen for title as it is the largest key length for an index.
 - `Original_Language` is assumed to be an [ISO 639](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes) set 1 language code. The source of the data (themoviedb.com), does not seem to have documentation on this.
-- Genre filtering is by each of the value in the comma separated list (e.g. Filtering by "Action" would match against "Action, Adventure").
+- Genre filtering is by each of the values in the comma separated list (e.g. Filtering by "Action" would match against "Action, Adventure").
 - For the first version, it is only possible to filter by a single genre at a time.
 
 ## Requirements Clarification
@@ -56,7 +56,6 @@ Below is a list of question I would ask to clarify the requirements of the task:
 - No CI/CD to automatically run unit tests
 - Missing unit tests for problem details
 - The search mechanism used is rather primitive as it does not handle scenarios such as special characters, mis-types and partial matches. This could be expanded in future to use a different mechanism such as full-text search.
-- Genres are currently stored as a comma separated list. This would be better as a separate table.
-- Database operations should ideally use `ToListAsync`, but this causes issues for unit testing. A solution should be found to allow ToListAsync to be used in the application whilst also allowing for unit testing.
+- Database operations should ideally use `ToListAsync`, but this causes issues for unit testing. A solution should be found to allow `ToListAsync` to be used in the application whilst also allowing for unit testing.
 - API documentation produced by swagger is basic and should be expanded with descriptions and examples.
 - Database scripts do not contain error handling.
